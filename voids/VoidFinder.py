@@ -49,9 +49,9 @@ from multiprocessing import Process, Manager
 
 ################################################################################
 
-find_void_catalogs = False
+find_void_catalogs = True
 calc_void_properties = True
-
+"""
 
 ################################################################################
 # USER INPUTS
@@ -234,7 +234,7 @@ for magnitude_limit in magnitude_limits:
                        capitalize_colnames=True)
 
         
-
+"""
 
 ################################################################################
 # USER INPUTS
@@ -248,7 +248,7 @@ num_cpus = 1
 #-------------------------------------------------------------------------------
 # File header
 
-survey_names = ['DESIVAST_NGC_','DESIVAST_SGC_']
+survey_names = ['DESIVAST_KIBO_NGC_','DESIVAST_KIBO_SGC_']
 
 
 # Change these directory paths to where your data is stored, and where you want 
@@ -258,7 +258,7 @@ in_directory = '../galaxy_catalog/'
 
 # Input file name
 # File format: RA, dec, redshift, comoving distance, absolute magnitude
-galaxies_filenames = ['iron_smoothed_ngc.fits', 'iron_smoothed_sgc.fits']
+galaxies_filenames = ['kibo_smoothed_ngc.fits', 'kibo_smoothed_sgc.fits']
 
 ngc_galaxies = in_directory + galaxies_filenames[0]
 sgc_galaxies = in_directory + galaxies_filenames[1]
@@ -295,8 +295,8 @@ dist_metric = 'comoving'
 # Uncomment if you do NOT want to remove galaxies with Mr > -20
 # Need to also uncomment relevent input in function calls below
 #mag_cut = False
-magnitude_limits = [-19.89, -20.0, -20.06]
-
+#magnitude_limits = [-19.89, -20.0, -20.06]
+magnitude_limits = [-20.0,]
 
 # Uncomment if you do NOT want to remove isolated galaxies
 # Need to also uncomment relevent input in function calls below
@@ -441,8 +441,8 @@ if calc_void_properties:
     print('Launching processes')
     processes = []
 
-    for voids_path in sdss_voids:
-        processes.append(Process(target = prepare_catalog,args=[voids_path, sdss_galaxies]))
+    #for voids_path in sdss_voids:
+    #    processes.append(Process(target = prepare_catalog,args=[voids_path, sdss_galaxies]))
 
     for voids_path in ngc_voids:
         processes.append(Process(target = prepare_catalog,args=[voids_path, ngc_galaxies]))

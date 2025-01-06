@@ -9,7 +9,7 @@ import configparser, os
 from vast.vsquared.zobov import Zobov
 
 
-config_file = 'vsquaredSDSS.ini'
+"""config_file = 'vsquaredSDSS.ini'
 
 
 for mag in (-19.94, -20.0, -20.11):
@@ -56,10 +56,10 @@ for mag in (-19.94, -20.0, -20.11):
     if visualize:
         newZobov.preViz()
 
-
+"""
 config_file ='vsquaredDESI.ini' 
 
-for mag in (-19.89, -20.0, -20.06):
+for mag in (-20.0,):#(-19.89, -20.0, -20.06):
     
     for cap in ('ngc','sgc'):
         
@@ -75,8 +75,8 @@ for mag in (-19.89, -20.0, -20.06):
         parser = configparser.SafeConfigParser()
         parser.read(config_file)
 
-        parser.set('Paths', 'Input Catalog', f'../galaxy_catalog/iron_smoothed_{cap}.fits')
-        parser.set('Paths', 'Survey Name', f'DESIVAST_{str.upper(cap)}')
+        parser.set('Paths', 'Input Catalog', f'../galaxy_catalog/kibo_smoothed_{cap}.fits')
+        parser.set('Paths', 'Survey Name', f'DESIVAST_KIBO_{str.upper(cap)}')
 
         parser.set('Settings', 'rabsmag_min', str(mag))
         parser.set('Paths','Output Directory', f'./data/minus{abs(mag)}/')

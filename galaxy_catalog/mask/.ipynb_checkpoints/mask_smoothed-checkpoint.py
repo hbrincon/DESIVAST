@@ -15,8 +15,8 @@ import healpy as hp
 fn = "/global/cfs/cdirs/desi/survey/ops/surveyops/trunk/ops/tiles-specstatus.ecsv"
 #fn = "tiles-specstatus.ecsv"
 tiles = Table.read(fn)
-#Iron end-date obtained form DESI wiki: https://desi.lbl.gov/trac/wiki/Pipeline/Releases/Iron
-sel = (tiles["FAFLAVOR"] == "mainbright") & (tiles["QA"] == "good") & (tiles["LASTNIGHT"] <= 20220613)
+#Kibo end-date obtained form DESI wiki: https://desi.lbl.gov/trac/wiki/Pipeline/Releases/Kibo
+sel = (tiles["FAFLAVOR"] == "mainbright") & (tiles["QA"] == "good") & (tiles["LASTNIGHT"] <= 20240409)
 tiles = tiles[sel] 
 
 # read Anand's healpix map
@@ -61,17 +61,19 @@ myd["FRAC"] = fracns # pixels where all tiles are obs.+qa-validated
 myd.meta["HPXNSIDE"] = hdr["HPXNSIDE"]
 myd.meta["HPXNEST"] = hdr["HPXNEST"]
 
+myd.write("kibo_mask.fits")
+
 # smooth the mask
 # convolve with 2.8 deg sigma gaussian
 smoothed_mask = hp.smoothing(myd['DONE'].astype(float), nest=True, sigma=2.8 * np.pi/180)
 # choose a threshold between 0-1 for including pixels in mask
 myd['DONE'][smoothed_mask < 0.338] = False
 #manually remove leftover unwanted regions
-theta, phi = hp.pix2ang(hp.get_nside(myd['DONE']), np.arange(len(myd['DONE'])), nest=True)
-ra = np.rad2deg(phi)
-dec = np.rad2deg(0.5 * np.pi - theta)
-select = (ra < 40) 
-myd['DONE'][select] = False
+#theta, phi = hp.pix2ang(hp.get_nside(myd['DONE']), np.arange(len(myd['DONE'])), nest=True)
+#ra = np.rad2deg(phi)
+#dec = np.rad2deg(0.5 * np.pi - theta)
+#select = (ra < 40) 
+#myd['DONE'][select] = False
 
 #save mask
-myd.write("iron_mask_smoothed.fits")
+myd.write("kibo_mask_smoothed.fits")
