@@ -66,6 +66,13 @@ with fitsio.FITS(iron_spec_path) as iron, open(f'kibo_info.pickle', 'wb') as iro
              )
     
     redshifts=redshifts[select]
+    
+    #select unique targets
+    duplicate_targets_length = len(redshifts)
+    _, select = np.unique(redshifts['TARGETID'], return_index=True)
+    redshifts = redshifts[select]
+    print(f'removed {duplicate_targets_length - len(redshifts)} duplicates')
+    
     iron_info['bgs_bright_count'] = len(redshifts) #BGS Bright galaxies
     print(len(redshifts), "BGS Bright galaxies")
     
