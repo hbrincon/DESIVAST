@@ -66,6 +66,17 @@ with fitsio.FITS(iron_spec_path) as iron, open(f'iron_info.pickle', 'wb') as iro
     
     redshifts=redshifts[select]
     fastspec=fastspec[select]
+        
+    #select unique targets
+    duplicate_targets_length = len(redshifts)
+    _, select = np.unique(redshifts['TARGETID'], return_index=True)
+    redshifts = redshifts[select]
+    fastspec=fastspec[select]
+    print(f'removed {duplicate_targets_length - len(redshifts)} duplicates')
+    
+    iron_info['bgs_bright_count'] = len(redshifts) #BGS Bright galaxies
+    print(len(redshifts), "BGS Bright galaxies")
+    
     iron_info['bgs_bright_count'] = len(fastspec) #BGS Bright galaxies
     print(len(fastspec), "BGS Bright galaxies")
 
