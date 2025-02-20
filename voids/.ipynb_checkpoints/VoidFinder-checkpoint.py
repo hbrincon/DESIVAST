@@ -49,6 +49,7 @@ from multiprocessing import Process, Manager
 
 ################################################################################
 
+# The first step is set up for 1 process, while the second step is parellizied
 find_void_catalogs = False
 calc_void_properties = True
 

@@ -117,18 +117,18 @@ def get_overlap_vr():
     
     void_frac["VR"] = frac
 """    
-def get_overlap_k1_vf():
+def get_overlap_k1_vf(edge_buffer):
 
-    desi = VoidFinderCatalog(desi_VF_path)
+    desi = VoidFinderCatalog(desi_VF_path, edge_buffer=edge_buffer)
     desi.add_galaxies(iron_path) 
     
-    sdss = VoidFinderCatalog(sdssk1_VF_path)
+    sdss = VoidFinderCatalog(sdssk1_VF_path, edge_buffer=edge_buffer)
     sdss.add_galaxies(nsak1_path) 
     
     masks = fits.open(masks_path)
     
     overlap = vc.get_overlap(desi, sdss, 
-                            masks['COMP'])
+                            masks['COMP'], edge_buffer)
         
     frac = {}
     frac['Shared'] = overlap[1]/overlap[0]
@@ -138,18 +138,18 @@ def get_overlap_k1_vf():
     
     void_frac["VF K1"] = frac
     
-def get_overlap_k1_vv():
+def get_overlap_k1_vv(edge_buffer):
     
-    desi = V2Catalog(desi_VV_path)
+    desi = V2Catalog(desi_VV_path, edge_buffer=edge_buffer)
     desi.add_galaxies(iron_path) 
     
-    sdss = V2Catalog(sdssk1_VV_path)
+    sdss = V2Catalog(sdssk1_VV_path, edge_buffer=edge_buffer)
     sdss.add_galaxies(nsak1_path) 
     
     masks = fits.open(masks_path)
     
     overlap = vc.get_overlap(desi, sdss, 
-                            masks['COMP'])
+                            masks['COMP'], edge_buffer)
         
     frac = {}
     frac['Shared'] = overlap[1]/overlap[0]
@@ -160,18 +160,18 @@ def get_overlap_k1_vv():
     void_frac["VV K1"] = frac
 
     
-def get_overlap_k1_vr():
+def get_overlap_k1_vr(edge_buffer):
 
-    desi = V2Catalog(desi_VR_path)
+    desi = V2Catalog(desi_VR_path, edge_buffer=edge_buffer)
     desi.add_galaxies(iron_path) 
     
-    sdss = V2Catalog(sdssk1_VR_path)
+    sdss = V2Catalog(sdssk1_VR_path, edge_buffer=edge_buffer)
     sdss.add_galaxies(nsak1_path) 
     
     masks = fits.open(masks_path)
     
     overlap = vc.get_overlap(desi, sdss, 
-                            masks['COMP'])
+                            masks['COMP'], edge_buffer)
         
     frac = {}
     frac['Shared'] = overlap[1]/overlap[0]
@@ -184,13 +184,14 @@ def get_overlap_k1_vr():
 
 
 processes = []
+edge_buffer=10 # Mpc/h
 
 #processes.append(Process(target = get_overlap_vf))
 #processes.append(Process(target = get_overlap_vv))
 #processes.append(Process(target = get_overlap_vr))
-processes.append(Process(target = get_overlap_k1_vf))
-processes.append(Process(target = get_overlap_k1_vv))
-processes.append(Process(target = get_overlap_k1_vr))
+processes.append(Process(target = get_overlap_k1_vf, args=[edge_buffer,]))
+processes.append(Process(target = get_overlap_k1_vv, args=[edge_buffer,]))
+processes.append(Process(target = get_overlap_k1_vr, args=[edge_buffer,]))
 
 """for  in range(25):
     # 20 GB per process * 6 processes = 120 GB 

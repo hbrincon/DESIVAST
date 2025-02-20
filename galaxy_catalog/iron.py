@@ -46,7 +46,7 @@ iron_info['mag_lim_buffer'] = mag_lim_buffer
 with fitsio.FITS(iron_spec_path) as iron, open(f'iron_info.pickle', 'wb') as iron_info_file:
     
     print("reading data")
-    redshifts = iron[2]['TARGETID','Z','ZWARN','DELTACHI2','SPECTYPE','RA','DEC','BGS_TARGET'
+    redshifts = iron[2]['TARGETID','Z','ZWARN','DELTACHI2','SPECTYPE','RA','DEC','BGS_TARGET', 'SURVEY', 'PROGRAM'
                        ][:]
     fastspec = iron[1][
                        'ABSMAG01_SDSS_R','ABSMAG01_IVAR_SDSS_R',
@@ -61,19 +61,19 @@ with fitsio.FITS(iron_spec_path) as iron, open(f'iron_info.pickle', 'wb') as iro
     # Select BGS Bright galaxies
     select = np.where(
                (redshifts['SPECTYPE']=='GALAXY') 
-               & (redshifts['BGS_TARGET'] & 2**1 != 0) #BGS bright
+               & (redshifts['BGS_TARGET'] & 2**1 != 0) #BGS bright target
+               & (redshifts['SURVEY']=='main')
+               & (redshifts['PROGRAM']=='bright')
              )
     
     redshifts=redshifts[select]
     fastspec=fastspec[select]
         
-    #select unique targets
-    duplicate_targets_length = len(redshifts)
+    #check for duplicate targets
     _, select = np.unique(redshifts['TARGETID'], return_index=True)
-    redshifts = redshifts[select]
-    fastspec=fastspec[select]
-    print(f'removed {duplicate_targets_length - len(redshifts)} duplicates')
-    
+    if len(redshifts) != len(select):
+        raise ValueError(f'Duplicate galaxies detected. {len(select)} out of {len(redshifts)} are unique')
+            
     iron_info['bgs_bright_count'] = len(fastspec) #BGS Bright galaxies
     print(len(fastspec), "BGS Bright galaxies")
 
