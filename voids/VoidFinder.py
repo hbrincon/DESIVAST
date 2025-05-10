@@ -241,14 +241,14 @@ for magnitude_limit in magnitude_limits:
 #-------------------------------------------------------------------------------
 # Number of CPUs available for analysis.
 # A value of None will use one less than all available CPUs.
-num_cpus = 1
+num_cpus = 20
 
 #-------------------------------------------------------------------------------
 # File name details
 #-------------------------------------------------------------------------------
 # File header
 
-survey_names = ['DESIVAST_KIBO_NGC_','DESIVAST_KIBO_SGC_']
+survey_names = ['DESIVAST_LOA_NGC_','DESIVAST_LOA_SGC_']
 
 
 # Change these directory paths to where your data is stored, and where you want 
@@ -258,7 +258,7 @@ in_directory = '../galaxy_catalog/'
 
 # Input file name
 # File format: RA, dec, redshift, comoving distance, absolute magnitude
-galaxies_filenames = ['kibo_smoothed_ngc.fits', 'kibo_smoothed_sgc.fits']
+galaxies_filenames = ['loa_smoothed_ngc.fits', 'loa_smoothed_sgc.fits']
 
 ngc_galaxies = in_directory + galaxies_filenames[0]
 sgc_galaxies = in_directory + galaxies_filenames[1]

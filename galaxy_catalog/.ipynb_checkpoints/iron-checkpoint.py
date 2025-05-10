@@ -8,13 +8,13 @@ import kcorrect.kcorrect
 #import kcorrect.response
 #kcorrect.response.all_responses()
 
-# Path to Kibo database
+# Path to Loa database
 # This path has been changed before, so make sure it is up to date when running the code for the first time in a while
 #iron_spec_path = "/global/cfs/cdirs/desi/public/dr1/vac/dr1/fastspecfit/iron/v2.1/catalogs/fastspec-iron.fits"
-iron_spec_path = '/global/cfs/cdirs/desi/spectro/redux/kibo/zcatalog/v1/ztile-main-bright-cumulative.fits'
+iron_spec_path = '/global/cfs/cdirs/desi/spectro/redux/loa/zcatalog/v1/ztile-main-bright-cumulative.fits'
 # Mask of 100% Survey Completeness
-mask_file = "./mask/kibo_mask.fits"
-smoothed_mask_file = "./mask/kibo_mask_smoothed.fits"
+mask_file = "./mask/loa_mask.fits"
+smoothed_mask_file = "./mask/loa_mask_smoothed.fits"
 
 
 # Redshift limits
@@ -46,7 +46,7 @@ iron_info['mag_lim'] = mag_lim
 iron_info['mag_lim_buffer'] = mag_lim_buffer
 
 #Open the Iron VAC
-with fitsio.FITS(iron_spec_path) as iron, open(f'kibo_info.pickle', 'wb') as iron_info_file:
+with fitsio.FITS(iron_spec_path) as iron, open(f'loa_info.pickle', 'wb') as iron_info_file:
     
     print("reading data")
     redshifts = iron[1]['TARGETID','Z','ZWARN','DELTACHI2','SPECTYPE','TARGET_RA','TARGET_DEC','BGS_TARGET', 
@@ -212,8 +212,8 @@ with fitsio.FITS(iron_spec_path) as iron, open(f'kibo_info.pickle', 'wb') as iro
     ##out[~select].write('iron_sgc.fits', format='fits', overwrite=True) 
     
     #smoothed mask catalog
-    out[select3*select].write('kibo_smoothed_ngc.fits', format='fits', overwrite=True) 
-    out[select3*~select].write('kibo_smoothed_sgc.fits', format='fits', overwrite=True) 
+    out[select3*select].write('loa_smoothed_ngc.fits', format='fits', overwrite=True) 
+    out[select3*~select].write('loa_smoothed_sgc.fits', format='fits', overwrite=True) 
 
 
 #for debugging
@@ -230,10 +230,10 @@ import kcorrect.kcorrect
 #import kcorrect.response
 #kcorrect.response.all_responses()
 
-# Path to Kibo database
+# Path to Loa database
 # This path has been changed before, so make sure it is up to date when running the code for the first time in a while
 #iron_spec_path = "/global/cfs/cdirs/desi/public/dr1/vac/dr1/fastspecfit/iron/v2.1/catalogs/fastspec-iron.fits"
-iron_spec_path = '/global/cfs/cdirs/desi/spectro/redux/kibo/zcatalog/v1/ztile-main-bright-cumulative.fits'
+iron_spec_path = '/global/cfs/cdirs/desi/spectro/redux/loa/zcatalog/v1/ztile-main-bright-cumulative.fits'
 
 #Open the Iron VAC
 with fitsio.FITS(iron_spec_path) as iron:

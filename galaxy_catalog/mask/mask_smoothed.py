@@ -15,7 +15,7 @@ import healpy as hp
 fn = "/global/cfs/cdirs/desi/survey/ops/surveyops/trunk/ops/tiles-specstatus.ecsv"
 #fn = "tiles-specstatus.ecsv"
 tiles = Table.read(fn)
-#Kibo end-date obtained form DESI wiki: https://desi.lbl.gov/trac/wiki/Pipeline/Releases/Kibo
+#Loa end-date obtained form DESI wiki: https://desi.lbl.gov/trac/wiki/Pipeline/Releases
 sel = (tiles["FAFLAVOR"] == "mainbright") & (tiles["QA"] == "good") & (tiles["LASTNIGHT"] <= 20240409)
 tiles = tiles[sel] 
 
@@ -61,7 +61,7 @@ myd["FRAC"] = fracns # pixels where all tiles are obs.+qa-validated
 myd.meta["HPXNSIDE"] = hdr["HPXNSIDE"]
 myd.meta["HPXNEST"] = hdr["HPXNEST"]
 
-myd.write("kibo_mask.fits")
+myd.write("loa_mask.fits")
 
 # smooth the mask
 # convolve with 2.8 deg sigma gaussian
@@ -76,4 +76,4 @@ myd['DONE'][smoothed_mask < 0.338] = False
 #myd['DONE'][select] = False
 
 #save mask
-myd.write("kibo_mask_smoothed.fits")
+myd.write("loa_mask_smoothed.fits")
