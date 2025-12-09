@@ -119,6 +119,8 @@ magnitude_limits = [-19.94, -20.0, -20.11]
 #-------------------------------------------------------------------------------
 ################################################################################
 
+
+
 for magnitude_limit in magnitude_limits:
     #print(np.abs(magnitude_limit))
     out_directory = f'./data/minus{np.abs(magnitude_limit)}/'  
@@ -234,7 +236,7 @@ for magnitude_limit in magnitude_limits:
                        num_cpus=num_cpus,
                        capitalize_colnames=True)
 
-        
+  
 
 
 ################################################################################
@@ -297,7 +299,6 @@ dist_metric = 'comoving'
 # Need to also uncomment relevent input in function calls below
 #mag_cut = False
 magnitude_limits = [-19.89, -20.0, -20.06]
-
 
 # Uncomment if you do NOT want to remove isolated galaxies
 # Need to also uncomment relevent input in function calls below

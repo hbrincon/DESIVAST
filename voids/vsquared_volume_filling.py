@@ -32,8 +32,7 @@ for cap in ('ngc','sgc'):
         parser.write(configfile)
 
     newZobov = Zobov(config_file,
-                     start=0,
-                     end=3,
+                     stages=[0,1,2,3],
                      save_intermediate=False,
                      visualize=visualize,
                      periodic=False,
