@@ -23,8 +23,8 @@ tiles = tiles[sel]
 # which stores in TILEIDS (npixels, npass) the list of tiles covering each pixel
 # uncomment the filepath appropriate for running on NERSC or your local machine
 #fn = "main-skymap-bright-goal.fits"
-#fn = "/global/cfs/cdirs/desi/users/raichoor/main-status/skymaps/bright/main-skymap-bright-goal.fits" # 5 pass version (not used for DESIVAST V1)
-fn = '/global/cfs/cdirs/desi/users/raichoor/main-status/skymaps/bright4pass/main-skymap-bright4pass-goal.fits'
+#fn = "/global/cfs/cdirs/desi/users/raichoor/main-status/skymap/bright/main-skymap-bright-goal.fits" # 5 pass version (not used for DESIVAST V1)
+fn = '/global/cfs/cdirs/desi/users/raichoor/main-status/skymap/bright4pass/main-skymap-bright4pass-goal.fits'
 hdr = fits.getheader(fn, 1)
 d = fits.open(fn)[1].data # fits.open is much faster than fitsio.read...
 nside = int((len(d['HPXPIXEL'])/12)**.5)

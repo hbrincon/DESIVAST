@@ -3,11 +3,16 @@ from astropy.table import Table
 from desimodel.footprint import tiles2pix  
 import numpy as np
 import healpy as hp
+from desisurveyops.status_sky import create_skygoal
 
 #This is Anand Raichoor's code, modified by Hernan Rincon to generate a mask for Iron
 
 # make sure you are using the desi conda environemnt, and if needed, re-add desimodel to the python path,
 # following instructions at https://desi.lbl.gov/trac/wiki/Pipeline/GettingStarted/Laptop
+
+# make sure to run the following:
+# source /global/cfs/cdirs/desi/software/desi_environment.sh 
+# module load desisurveyops
 
 # read the tiles-specstatus to get the qa-validated tiles.
 # tiles must contains (RA, DEC) so that tiles2pix works
@@ -23,10 +28,13 @@ tiles = tiles[sel]
 # which stores in TILEIDS (npixels, npass) the list of tiles covering each pixel
 # uncomment the filepath appropriate for running on NERSC or your local machine
 #fn = "main-skymap-bright-goal.fits"
-#fn = "/global/cfs/cdirs/desi/users/raichoor/main-status/skymaps/bright/main-skymap-bright-goal.fits" # 5 pass version (not used for DESIVAST V1)
-fn = '/global/cfs/cdirs/desi/users/raichoor/main-status/skymaps/bright4pass/main-skymap-bright4pass-goal.fits'
-hdr = fits.getheader(fn, 1)
-d = fits.open(fn)[1].data # fits.open is much faster than fitsio.read...
+#fn = "/global/cfs/cdirs/desi/users/raichoor/main-status/skymap/bright/main-skymap-bright-goal.fits" # 5 pass version (not used for DESIVAST V1)
+
+#fn = '/global/cfs/cdirs/desi/users/raichoor/main-status/skymap/bright4pass/main-bright4pass-skymap-goal.fits'
+#hdr = fits.getheader(fn, 1)
+#d = fits.open(fn)[1].data # fits.open is much faster than fitsio.read...
+d = create_skygoal("/global/cfs/cdirs/desi/survey/ops/surveyops/trunk/ops/tiles-main.ecsv", "BRIGHT", skip_pass=[4])
+
 nside = int((len(d['HPXPIXEL'])/12)**.5)
 npass = d["TILEIDS"].shape[1] # npass=4 for bright
 goal_ns = d["NPASS"] # number of planned tiles covering each pixel

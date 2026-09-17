@@ -6,8 +6,10 @@ from astropy.table import Table, vstack, hstack
 import numpy.lib.recfunctions as rfn
 import pickle
 
+# WARNING: Bug found with e-corrections not being implemented. See redblue version of script for the correction
+
 # Mask of 100% Survey Completeness
-mask_file = "./mask/loa_mask.fits"
+#mask_file = "./mask/loa_mask.fits"
 smoothed_mask_file = "./mask/loa_mask_smoothed.fits"
 
 
@@ -124,7 +126,7 @@ for idx in range (12):
 
         catalog=catalog[select]
 
-        select = catalog['Z'] > zmax   # > zmin and not >=zmin to avoid galaxies at origin
+        select = catalog['Z'] > zmax   
         
         catalog['IN_SAMPLE'][select] = 0 # mark buffer galaxies
 

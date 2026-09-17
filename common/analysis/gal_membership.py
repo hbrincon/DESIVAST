@@ -6,12 +6,14 @@ import time
 
 import os
 import sys
-sys.path.insert(1, '/global/homes/h/hrincon/python_tools')
-import VoidVolume as vol
-import Env as env
-from VoidCatalog import VoidFinderCatalog, VoidFinderCatalogStacked, V2Catalog, V2CatalogStacked
-import VoidCatalog as vc
+#sys.path.insert(1, '/global/homes/h/hrincon/python_tools')
+#import vast.catalog.void_volume as vol
+#import Env as env
+from vast.catalog.void_catalog import VoidFinderCatalog, VoidFinderCatalogStacked, V2Catalog, V2CatalogStacked
+import vast.catalog.void_catalog as vc
 from multiprocessing import Process, Manager
+
+# NOTE: magnitude limits are applied in the galaxy_membership method, using the MAGLIM value stored in the void algorithm output
 
 manager = Manager()
 
